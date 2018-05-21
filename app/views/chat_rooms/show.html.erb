@@ -1,3 +1,5 @@
+<%= link_to "Back to Home", chat_rooms_path %>
+
 <h1><%= @chat_room.title %></h1>
 
 <div id="messages" data-chat-room-id="<%= @chat_room.id %>">
@@ -9,7 +11,6 @@
 <%= form_for @message, url: '#' do |f| %>
     <%= hidden_field_tag 'chat_room_id', @chat_room.id %>
     <div class="form-group">
-        <%= f.label :body %>
         <%= f.text_area :body, class: 'form-control' %>
         <small class="text-muted">From 2 to 1000 characters</small>
   </div>

@@ -12,6 +12,9 @@ gem 'pg'
 gem 'devise'
 # Use Bootstrap
 gem 'bootstrap', '~> 4.0.0.alpha3'
+gem "bootstrap_form",
+    git: "https://github.com/bootstrap-ruby/bootstrap_form.git",
+    branch: "master"
 # Use jQuery to support animations/design functionality
 gem 'jquery-rails'
 # Use Puma as the app server

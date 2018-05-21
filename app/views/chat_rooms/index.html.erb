@@ -1,4 +1,40 @@
-<h6>Welcome, <%= current_user.name %>
+<h6>Welcome, <%= current_user.name %></h6>
+<div>
+<h5>Requests</h5>
+<table>
+<% @connections.each do |connection| %>
+<tr>
+    <td><%= connection.user_id %></td>
+    <td>
+        <%= bootstrap_form_for(connection) do |f| %>
+        <%= f.select :status, ["accept", "reject"] %>
+        <%= f.hidden_field :user_id, :value => connection.id %>
+        <%= f.hidden_field :other_user_id, :value => current_user.id %>
+        <%= f.submit "Submit" %>
+        <% end %>
+    </td>
+</tr>
+</table>
+<% end %>
+</div>
+
+<div>
+<h5>Requested</h5>
+<table>
+<tr>
+    <th>User</th>
+    <th>Status</th>
+</tr>
+<% @requests.each do |request| %>
+<tr>
+    <td><%= request.other_user_id %></td>
+    <td><%= request.status %></td>
+
+</tr>
+</table>
+<% end %>
+</div>
+
 <h1>Chat rooms</h1>
 
 <p class="lead"><%= link_to 'New chat room', new_chat_room_path, class: 'btn btn-primary' %> </p>
@@ -6,3 +42,16 @@
 <ul>
     <%= render @chat_rooms %>
 </ul>
+
+<div>
+    <h6>Users</h6>
+    <%= bootstrap_form_for(@connection) do |f| %>
+    <%= f.collection_select :other_user_id, @users, :id, :name, prompt: true %>
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+    <%= f.hidden_field :status, :value => "pending" %>
+    <div class="form-buttons">
+        <%= f.submit "Request User" %>
+    </div>
+<% end %>
+
+</div>
