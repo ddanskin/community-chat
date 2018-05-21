@@ -1,11 +1,14 @@
 class ChatRoomsController < ApplicationController
     def index
         @chat_rooms = ChatRoom.all
+        @users = User.all
+        @connection = Connection.new
+        @connections = Connection.where(other_user_id: current_user.id, status: "pending")
+        @requests = Connection.where(user_id: current_user.id, status: "pending")
     end
 
     def new
         @chat_room = ChatRoom.new
-        @connection = Connection.new
     end
 
     def create
