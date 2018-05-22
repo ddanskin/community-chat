@@ -1,5 +1,5 @@
 <%= link_to "Back to Home", private_chat_rooms_path %>
-
+<% if can_see?(@private_chat_room) %>
 <h1><%= @private_chat_room.title %></h1>
 
 <div id="private_messages" data-private-chat-room-id="<%= @private_chat_room.id %>">
@@ -16,4 +16,5 @@
   </div>
 
   <%= f.submit "Post", class: 'btn btn-primary btn-lg' %>
+<% end %>
 <% end %>
