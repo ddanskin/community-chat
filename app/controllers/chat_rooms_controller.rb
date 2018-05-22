@@ -5,6 +5,8 @@ class ChatRoomsController < ApplicationController
         @connection = Connection.new
         @connections = Connection.where(other_user_id: current_user.id, status: "pending")
         @requests = Connection.where(user_id: current_user.id, status: "pending")
+        @private_chat_room = PrivateChatRoom.new
+        @private_chat_rooms = PrivateChatRoom.all
     end
 
     def new

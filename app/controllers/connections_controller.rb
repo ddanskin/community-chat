@@ -4,6 +4,7 @@ class ConnectionsController < ApplicationController
 
     def new
         @connection = Connection.new
+        @private_chat_room = PrivateChatRoom.new
     end
 
     def create
@@ -23,7 +24,12 @@ class ConnectionsController < ApplicationController
 
     def update
         @connection.update_attributes(connection_params)
-        redirect_to(chat_rooms_path)
+        if @connection.status == "accept"
+            userOne = User.find_by(id: @connection.user_id)
+            userTwo = User.find_by(id: @connection.other_user_id)
+            @private_chat_room = PrivateChatRoom.create(user_id: userOne.id, other_user_id: userTwo.id, title: "#{userOne.name} - #{userTwo.name}")
+        end
+        redirect_to(private_chat_rooms_path)
     end
 
     def delete

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_21_040237) do
+ActiveRecord::Schema.define(version: 2018_05_21_180823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,25 @@ ActiveRecord::Schema.define(version: 2018_05_21_040237) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
+  create_table "private_chat_rooms", force: :cascade do |t|
+    t.bigint "user_id"
+    t.integer "other_user_id"
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_private_chat_rooms_on_user_id"
+  end
+
+  create_table "private_messages", force: :cascade do |t|
+    t.text "body"
+    t.bigint "user_id"
+    t.bigint "private_chat_room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["private_chat_room_id"], name: "index_private_messages_on_private_chat_room_id"
+    t.index ["user_id"], name: "index_private_messages_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -61,4 +80,7 @@ ActiveRecord::Schema.define(version: 2018_05_21_040237) do
   add_foreign_key "chat_rooms", "users"
   add_foreign_key "messages", "chat_rooms"
   add_foreign_key "messages", "users"
+  add_foreign_key "private_chat_rooms", "users"
+  add_foreign_key "private_messages", "private_chat_rooms"
+  add_foreign_key "private_messages", "users"
 end
