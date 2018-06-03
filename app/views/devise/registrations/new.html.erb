@@ -2,7 +2,7 @@
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
-
+  <p>Don't have an account? Let's get you signed up!</p>
   <div class="field">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
@@ -25,5 +25,7 @@
     <%= f.submit "Sign up" %>
   </div>
 <% end %>
-
-<%= render "devise/shared/links" %>
+<div>
+    <p>Already have an account?</p>
+    <%= render "devise/shared/links" %>
+</div>
